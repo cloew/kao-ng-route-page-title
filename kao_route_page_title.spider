@@ -1,0 +1,12 @@
+use angular;
+use console;
+
+angular.module('kao.route.page-title', ['ngRoute', 'kao.page-title'])
+    .run(fn($rootScope, PageTitle) {
+        $rootScope.$on('$routeChangeSuccess', fn(event, current, previous) {
+            console.log(current);
+            if current.title {
+                PageTitle.set(current.title);
+            }
+        });
+    });
