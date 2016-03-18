@@ -2,11 +2,22 @@ use angular;
 use console;
 
 angular.module('kao.route.page-title', ['ngRoute', 'kao.page-title'])
-    .run(fn($rootScope, PageTitle) {
+    .provider('PageTitleFormat', fn() {
+        var format = undefined;
+        this.set = fn(templateFormat) {
+            format = templateFormat;
+        };
+        this.$get = fn($interpolate) {
+            return {'format': fn(route) {
+                return $interpolate(format)(route);
+            }};
+        };
+    })
+    .run(fn($rootScope, PageTitle, PageTitleFormat) {
         $rootScope.$on('$routeChangeSuccess', fn(event, current, previous) {
-            console.log(current);
             if current.title {
-                PageTitle.set(current.title);
+                var title = PageTitleFormat.format(current);
+                PageTitle.set(title);
             }
         });
     });
