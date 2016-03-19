@@ -4,7 +4,9 @@ use console;
 angular.module('kao.route.page-title', ['ngRoute', 'kao.page-title'])
     .run(fn($rootScope, PageTitle, FormattedPageTitle) {
         $rootScope.$on('$routeChangeSuccess', fn(event, current, previous) {
-            if current.title {
+            if current.full_title {
+                PageTitle.set(current.full_title, current);
+            } else if current.title {
                 FormattedPageTitle.set(current);
             }
         });
