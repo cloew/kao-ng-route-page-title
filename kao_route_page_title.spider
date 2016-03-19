@@ -7,7 +7,11 @@ angular.module('kao.route.page-title', ['ngRoute', 'kao.page-title'])
             if current.full_title {
                 PageTitle.set(current.full_title, current);
             } else if current.title {
-                FormattedPageTitle.set(current);
+                if FormattedPageTitle.isSetup() {
+                    FormattedPageTitle.set(current);
+                } else {
+                    PageTitle.set(current.title, current);
+                }
             }
         });
     });

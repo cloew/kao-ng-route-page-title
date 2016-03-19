@@ -6,7 +6,11 @@ $traceurRuntime.ModuleStore.getAnonymousModule(function() {
         PageTitle.set(current.full_title, current);
       } else {
         if (current.title) {
-          FormattedPageTitle.set(current);
+          if (FormattedPageTitle.isSetup()) {
+            FormattedPageTitle.set(current);
+          } else {
+            PageTitle.set(current.title, current);
+          }
         }
       }
     });
